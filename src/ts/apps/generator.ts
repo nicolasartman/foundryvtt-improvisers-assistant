@@ -1,6 +1,6 @@
 import { moduleId } from "../constants"
 
-export default class DogBrowser extends Application {
+export default class ImprovisersAssistant extends Application {
   private imageUrl? = ""
 
   override get title(): string {
@@ -9,8 +9,8 @@ export default class DogBrowser extends Application {
 
   static override get defaultOptions(): ApplicationOptions {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      id: "dog-browser",
-      template: `modules/${moduleId}/templates/dogs.hbs`,
+      id: "improviser-assistant",
+      template: `modules/${moduleId}/templates/generator.hbs`,
       width: 720,
       height: 720,
     }) as ApplicationOptions
@@ -24,20 +24,10 @@ export default class DogBrowser extends Application {
 
   override activateListeners(html: JQuery<HTMLElement>): void {
     super.activateListeners(html)
-    html.find("button.module-control").on("click", this._onClickControlButton.bind(this))
-  }
-
-  async _onClickControlButton(event: Event): Promise<void> {
-    event.preventDefault()
-    const button = event.currentTarget as HTMLElement
-    const action = button.dataset.action
-    // const module = (game as Game).modules.get(moduleName) as MyModule;
-
-    switch (action) {
-      case "randomize-dog":
-        this._randomizeDog()
-        break
-    }
+    html.find("button.module-control").on("click", (event) => {
+      event.preventDefault()
+      this._randomizeDog()
+    })
   }
 
   async _randomizeDog() {

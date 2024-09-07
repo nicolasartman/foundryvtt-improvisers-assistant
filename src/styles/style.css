@@ -1,15 +1,15 @@
-.window-app .window-content section.module-dog-picture-container {
+.window-app .window-content section.generated-image-container {
   flex: 100;
   display: flex;
   justify-content: center;
   align-content: center;
   margin-top: 10px;
 
-  .module-dog-placeholder {
+  .generated-image {
     font-size: 200px;
   }
 
-  img.module-dog-image {
+  img.generated-image {
     object-fit: contain;
     border: none;
   }

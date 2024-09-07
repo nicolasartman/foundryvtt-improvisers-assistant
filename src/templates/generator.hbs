@@ -7,21 +7,20 @@
       class="module-control"
       type="button"
       title="{{localize 'IMPROVISERS_ASSISTANT.generate-button-title'}}"
-      data-action="randomize-dog"
     >
       <i class="fas fa-random fa-fw"></i>
     </button>
   </header>
 </section>
-<section class="module-dog-picture-container">
+<section class="generated-image-container">
   {{#if this.imageUrl}}
     <img
-      class="module-dog-image"
+      class="generated-image"
       src="{{this.imageUrl}}"
       alt="{{localize 'IMPROVISERS_ASSISTANT.generated-image-alt'}}"
     />
   {{else}}
-    <p class="module-dog-placeholder">
+    <p class="generated-image-placeholder">
       🐶
     </p>
   {{/if}}
