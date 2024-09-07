@@ -7,6 +7,7 @@
     "Title": "Improviser's Assistant",
     "MainSectionHeader": "Generate",
     "GenerateButtonTitle": "Generate Image",
-    "GeneratedImageAlt": "Generated Image"
+    "GeneratedImageAlt": "Generated Image",
+    "PromptPlaceholder": "Examples: 'kobold', 'majestic horse', 'giant enemy crab'"
   }
 }

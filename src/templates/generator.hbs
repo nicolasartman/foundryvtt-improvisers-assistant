@@ -3,25 +3,35 @@
     <h1 class="grow-header">
       {{localize "IMPROVISERS_ASSISTANT.MainSectionHeader"}}
     </h1>
+  </header>
+  <div class="prompt-input-container">
+    <input
+      type="text"
+      name="prompt"
+      class="prompt-input"
+      value="{{prompt}}"
+      placeholder="{{localize 'IMPROVISERS_ASSISTANT.PromptPlaceholder'}}"
+    />
     <button
-      class="module-control"
+      class="generate-button"
       type="button"
       title="{{localize 'IMPROVISERS_ASSISTANT.GenerateButtonTitle'}}"
+      width="25px"
     >
-      <i class="fas fa-random fa-fw"></i>
+      <i class="fas fa-arrows-spin"></i>
     </button>
-  </header>
+  </div>
 </section>
 <section class="generated-image-container">
-  {{#if this.isLoading}}
+  {{#if isLoading}}
     <p class="generated-image-placeholder">
       {{localize "IMPROVISERS_ASSISTANT.LoadingMessage"}}
     </p>
   {{else}}
-    {{#if this.imageUrl}}
+    {{#if imageUrl}}
       <img
         class="generated-image"
-        src="{{this.imageUrl}}"
+        src="{{imageUrl}}"
         alt="{{localize 'IMPROVISERS_ASSISTANT.GeneratedImageAlt'}}"
       />
     {{else}}

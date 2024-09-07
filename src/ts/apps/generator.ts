@@ -3,6 +3,7 @@ import { moduleId } from "../constants"
 export default class ImprovisersAssistant extends Application {
   private imageUrl?: string = ""
   private isLoading: boolean = false
+  private prompt: string = ""
 
   override get title(): string {
     return (game as Game).i18n.localize("IMPROVISERS_ASSISTANT.Title")
@@ -21,19 +22,31 @@ export default class ImprovisersAssistant extends Application {
     return {
       imageUrl: this.imageUrl,
       isLoading: this.isLoading,
+      prompt: this.prompt,
     }
   }
 
   override activateListeners(html: JQuery<HTMLElement>): void {
     super.activateListeners(html)
-    html.find("button.module-control").on("click", async (event) => {
-      event.preventDefault()
+    const generate = async () => {
+      this.prompt = html.find("input[name='prompt']").val() as string
       this.isLoading = true
       this.render()
-      const imageUrl = await this.generateKittenImage()
+      const imageUrl = await this.generateImage()
       this.imageUrl = imageUrl
       this.isLoading = false
       this.render()
+    }
+
+    html.find("button.generate-button").on("click", (event) => {
+      event.preventDefault()
+      generate()
+    })
+    html.find("input[name='prompt']").on("keypress", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault()
+        generate()
+      }
     })
   }
 
@@ -41,7 +54,7 @@ export default class ImprovisersAssistant extends Application {
     return ((game as Game).settings.get(moduleId, "open_ai_api_key") || "") as string
   }
 
-  async generateKittenImage() {
+  async generateImage() {
     const apiKey = ImprovisersAssistant.getOpenAiApiKey()
     console.log("apiKey", apiKey)
     if (!apiKey) {
@@ -49,7 +62,9 @@ export default class ImprovisersAssistant extends Application {
       return
     }
 
-    console.log("generating...")
+    const prompt = `Generate a circle tabletop RPG token of a ${
+      this.prompt || "cute kitten"
+    }. Black matte background. Fantasy art style.`
 
     const response = await fetch("https://api.openai.com/v1/images/generations", {
       method: "POST",
@@ -59,13 +74,11 @@ export default class ImprovisersAssistant extends Application {
       },
       body: JSON.stringify({
         model: "dall-e-3",
-        prompt: "Generate an image of a cute kitten",
+        prompt,
         n: 1,
         size: "1024x1024",
       }),
     })
-
-    console.log("response", response)
 
     if (response.status != 200) {
       ui.notifications?.error(
