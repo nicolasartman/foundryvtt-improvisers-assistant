@@ -27,7 +27,11 @@ export default defineConfig({
     {
       name: "watch-external",
       async buildStart() {
-        const files = [...(await fastGlob("src/**/*.hbs")), ...(await fastGlob("src/**/*.json"))]
+        const files = [
+          ...(await fastGlob("src/**/*.hbs")),
+          ...(await fastGlob("src/**/*.json")),
+          "src/styles/style.css",
+        ]
         for (let file of files) {
           this.addWatchFile(file)
         }
