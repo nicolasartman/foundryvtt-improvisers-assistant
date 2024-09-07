@@ -22,11 +22,12 @@ export default defineConfig({
     },
   },
   plugins: [
-    // Watch for changes to Handlebars templates since they aren't picked up automatically
+    // Watch for changes to Handlebars templates & JSON files since they aren't picked up
+    // automatically
     {
       name: "watch-external",
       async buildStart() {
-        const files = await fastGlob("src/**/*.hbs")
+        const files = [...(await fastGlob("src/**/*.hbs")), ...(await fastGlob("src/**/*.json"))]
         for (let file of files) {
           this.addWatchFile(file)
         }
