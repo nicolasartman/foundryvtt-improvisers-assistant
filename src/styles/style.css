@@ -1,9 +1,9 @@
 .window-app .window-content .generated-image-container {
   flex: 100;
   display: flex;
-  justify-content: center;
-  align-content: center;
-  margin-top: 10px;
+  flex-direction: column;
+  padding-top: 10px;
+  align-items: center;
 
   .generated-image {
     font-size: 200px;

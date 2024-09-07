@@ -1,7 +1,7 @@
 import { moduleId } from "../constants"
 
 export default class ImprovisersAssistant extends Application {
-  private imageUrl?: string = ""
+  private imageBase64?: string
   private isLoading: boolean = false
   private prompt: string = ""
 
@@ -20,7 +20,7 @@ export default class ImprovisersAssistant extends Application {
 
   override getData() {
     return {
-      imageUrl: this.imageUrl,
+      imageUrl: this.imageBase64 ? `data:image/png;base64,${this.imageBase64}` : undefined,
       isLoading: this.isLoading,
       prompt: this.prompt,
     }
@@ -32,8 +32,7 @@ export default class ImprovisersAssistant extends Application {
       this.prompt = html.find("input[name='prompt']").val() as string
       this.isLoading = true
       this.render()
-      const imageUrl = await this.generateImage()
-      this.imageUrl = imageUrl
+      await this.generateImage()
       this.isLoading = false
       this.render()
     }
@@ -48,6 +47,11 @@ export default class ImprovisersAssistant extends Application {
         generate()
       }
     })
+
+    html.find("button.create-token-button").on("click", async (event) => {
+      event.preventDefault()
+      await this.createToken()
+    })
   }
 
   static getOpenAiApiKey(): string {
@@ -56,7 +60,6 @@ export default class ImprovisersAssistant extends Application {
 
   async generateImage() {
     const apiKey = ImprovisersAssistant.getOpenAiApiKey()
-    console.log("apiKey", apiKey)
     if (!apiKey) {
       ui.notifications?.error("OpenAI API key is not set.")
       return
@@ -77,21 +80,52 @@ export default class ImprovisersAssistant extends Application {
         prompt,
         n: 1,
         size: "1024x1024",
+        response_format: "b64_json",
       }),
     })
 
     if (response.status != 200) {
       ui.notifications?.error(
-        `Unexpected response fetching new kitten image: ${response.status}: ${response.statusText}`,
+        `Unexpected response fetching new image: ${response.status}: ${response.statusText}`,
       )
       return
     }
 
     const data = await response.json()
     if (data && data.data && data.data.length > 0) {
-      return data.data[0].url
+      this.imageBase64 = data.data[0].b64_json
     } else {
       ui.notifications?.error("No image returned from OpenAI.")
+    }
+  }
+
+  async createToken() {
+    const scene = (game as Game).scenes?.active
+    if (!scene) {
+      ui.notifications?.warn("No active scene.")
+      return
+    }
+
+    if (!this.imageBase64) {
+      ui.notifications?.error("No image generated yet.")
+      return
+    }
+
+    try {
+      // Create the token using the base64 image data directly
+      const tokenData = {
+        img: `data:image/png;base64,${this.imageBase64}`,
+        name: this.prompt || "Generated Token",
+        x: 0,
+        y: 0,
+        // You can add more properties here as needed
+      }
+
+      await scene.createEmbeddedDocuments("Token", [tokenData])
+      ui.notifications?.info("Token created successfully.")
+    } catch (error) {
+      console.error("Error creating token:", error)
+      ui.notifications?.error("Failed to create token.")
     }
   }
 }

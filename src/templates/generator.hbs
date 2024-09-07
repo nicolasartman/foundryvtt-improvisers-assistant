@@ -34,6 +34,15 @@
         src="{{imageUrl}}"
         alt="{{localize 'IMPROVISERS_ASSISTANT.GeneratedImageAlt'}}"
       />
+      {{#if imageUrl}}
+        <button
+          class="create-token-button"
+          type="button"
+          title="{{localize 'IMPROVISERS_ASSISTANT.CreateTokenButtonTitle'}}"
+        >
+          {{localize "IMPROVISERS_ASSISTANT.CreateTokenButtonLabel"}}
+        </button>
+      {{/if}}
     {{else}}
       <p class="generated-image-placeholder">
         {{localize "IMPROVISERS_ASSISTANT.InitialPrompt"}}

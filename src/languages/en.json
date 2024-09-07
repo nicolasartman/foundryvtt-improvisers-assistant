@@ -5,9 +5,11 @@
     "InitialPrompt": "Type in what you want to generate then click generate.",
     "LoadingMessage": "Generating image...",
     "Title": "Improviser's Assistant",
-    "MainSectionHeader": "Generate",
+    "MainSectionHeader": "Generate Token",
     "GenerateButtonTitle": "Generate Image",
     "GeneratedImageAlt": "Generated Image",
-    "PromptPlaceholder": "Examples: 'kobold', 'majestic horse', 'giant enemy crab'"
+    "PromptPlaceholder": "Examples: 'kobold', 'majestic horse', 'giant enemy crab'",
+    "CreateTokenButtonLabel": "Create Token",
+    "CreateTokenButtonTitle": "Create a new token on the current scene with this image"
   }
 }
