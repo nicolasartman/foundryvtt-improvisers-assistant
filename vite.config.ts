@@ -1,4 +1,5 @@
 import * as fsPromises from "fs/promises"
+import fastGlob from "fast-glob"
 import copy from "rollup-plugin-copy"
 import { defineConfig, Plugin } from "vite"
 
@@ -21,6 +22,16 @@ export default defineConfig({
     },
   },
   plugins: [
+    // Watch for changes to Handlebars templates since they aren't picked up automatically
+    {
+      name: "watch-external",
+      async buildStart() {
+        const files = await fastGlob("src/**/*.hbs")
+        for (let file of files) {
+          this.addWatchFile(file)
+        }
+      },
+    },
     updateModuleManifestPlugin(),
     copy({
       targets: [

@@ -14,5 +14,8 @@
     "rollup-plugin-copy": "^3.5.0",
     "typescript": "^5.5.4",
     "vite": "^5.4.3"
+  },
+  "dependencies": {
+    "fast-glob": "^3.3.2"
   }
 }

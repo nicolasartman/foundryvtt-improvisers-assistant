@@ -11,10 +11,30 @@ Hooks.once("init", () => {
   module.dogBrowser = new DogBrowser()
 })
 
-Hooks.on("renderActorDirectory", (_: Application, html: JQuery) => {
-  const button = $(`<button class="cc-sidebar-button" type="button">🐶</button>`)
-  button.on("click", () => {
-    module.dogBrowser.render(true)
+// Hooks.on("renderActorDirectory", (_: Application, html: JQuery) => {
+//   const button = $(`<button class="cc-sidebar-button" type="button">🐶</button>`)
+//   button.on("click", () => {
+//     module.dogBrowser.render(true)
+//   })
+//   html.find(".directory-header .action-buttons").append(button)
+// })
+
+Hooks.on("getSceneControlButtons", (controls) => {
+  controls.push({
+    name: "tokencreator",
+    title: "Improviser's Assistant",
+    icon: "fas fa-plus-circle",
+    layer: "controls",
+    visible: true,
+    activeTool: "none",
+    tools: [
+      {
+        name: "open",
+        title: "Open Improviser's Assistant",
+        icon: "fas fa-plus-circle",
+        button: true,
+        onClick: () => module.dogBrowser.render(true),
+      },
+    ],
   })
-  html.find(".directory-header .action-buttons").append(button)
 })
