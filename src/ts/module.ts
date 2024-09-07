@@ -1,4 +1,5 @@
 import ImproviserAssistant from "./apps/generator"
+import registerSettings from "./apps/registerSettings"
 import { moduleId } from "./constants"
 import { ImproviserAssistantModule } from "./types"
 
@@ -9,6 +10,8 @@ Hooks.once("init", () => {
 
   module = (game as Game).modules.get(moduleId) as ImproviserAssistantModule
   module.improviserAssistant = new ImproviserAssistant()
+
+  registerSettings()
 })
 
 Hooks.on("getSceneControlButtons", (controls) => {

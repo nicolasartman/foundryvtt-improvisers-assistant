@@ -1,27 +1,33 @@
 <section>
   <header class="flex-header">
     <h1 class="grow-header">
-      {{localize "IMPROVISERS_ASSISTANT.main-section-header"}}
+      {{localize "IMPROVISERS_ASSISTANT.MainSectionHeader"}}
     </h1>
     <button
       class="module-control"
       type="button"
-      title="{{localize 'IMPROVISERS_ASSISTANT.generate-button-title'}}"
+      title="{{localize 'IMPROVISERS_ASSISTANT.GenerateButtonTitle'}}"
     >
       <i class="fas fa-random fa-fw"></i>
     </button>
   </header>
 </section>
 <section class="generated-image-container">
-  {{#if this.imageUrl}}
-    <img
-      class="generated-image"
-      src="{{this.imageUrl}}"
-      alt="{{localize 'IMPROVISERS_ASSISTANT.generated-image-alt'}}"
-    />
-  {{else}}
+  {{#if this.isLoading}}
     <p class="generated-image-placeholder">
-      🐶
+      {{localize "IMPROVISERS_ASSISTANT.LoadingMessage"}}
     </p>
+  {{else}}
+    {{#if this.imageUrl}}
+      <img
+        class="generated-image"
+        src="{{this.imageUrl}}"
+        alt="{{localize 'IMPROVISERS_ASSISTANT.GeneratedImageAlt'}}"
+      />
+    {{else}}
+      <p class="generated-image-placeholder">
+        {{localize "IMPROVISERS_ASSISTANT.InitialPrompt"}}
+      </p>
+    {{/if}}
   {{/if}}
 </section>
