@@ -4,15 +4,6 @@
   flex-direction: column;
   padding-top: 10px;
   align-items: center;
-
-  .generated-image {
-    font-size: 200px;
-  }
-
-  img.generated-image {
-    object-fit: contain;
-    border: none;
-  }
 }
 
 .window-app .window-content {
@@ -26,9 +17,29 @@
     height: 100%;
   }
 
+  .generated-image {
+    font-size: 200px;
+  }
+
+  .generated-image {
+    object-fit: contain;
+    border: none;
+    max-width: 250px;
+  }
+
   .generate-button {
     flex-grow: 0;
     width: min-content;
     height: 100%;
+  }
+
+  .prompt-input-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .prompt-input {
+    flex-grow: 1;
+    margin-right: 5px;
   }
 }

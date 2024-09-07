@@ -2,14 +2,21 @@
   "IMPROVISERS_ASSISTANT.Settings.OpenAI_API_Key.Name": "OpenAI API Key",
   "IMPROVISERS_ASSISTANT.Settings.OpenAI_API_Key.Hint": "Enter your OpenAI API key here",
   "IMPROVISERS_ASSISTANT": {
-    "InitialPrompt": "Type in what you want to generate then click generate.",
+    "InitialTokenPrompt": "Type in what token you want to generate then click generate.",
+    "InitialTilePrompt": "Type in what tile you want to generate then click generate.",
     "LoadingMessage": "Generating image...",
     "Title": "Improviser's Assistant",
-    "MainSectionHeader": "Generate Token",
-    "GenerateButtonTitle": "Generate Image",
-    "GeneratedImageAlt": "Generated Image",
-    "PromptPlaceholder": "Examples: 'kobold', 'majestic horse', 'giant enemy crab'",
+    "TokenSectionHeader": "Generate Token",
+    "TileSectionHeader": "Generate Tile",
+    "GenerateTokenButtonTitle": "Generate Token Image",
+    "GenerateTileButtonTitle": "Generate Tile Image",
+    "GeneratedTokenImageAlt": "Generated Token Image",
+    "GeneratedTileImageAlt": "Generated Tile Image",
+    "TokenPromptPlaceholder": "Examples: 'kobold', 'majestic horse', 'giant enemy crab'",
+    "TilePromptPlaceholder": "Examples: 'wooden floor', 'stone wall', 'grassy field'",
     "CreateTokenButtonLabel": "Create Token",
-    "CreateTokenButtonTitle": "Create a new token on the current scene with this image"
+    "CreateTokenButtonTitle": "Create a new token on the current scene with this image",
+    "CreateTileButtonLabel": "Create Tile",
+    "CreateTileButtonTitle": "Create a new tile on the current scene with this image"
   }
 }
