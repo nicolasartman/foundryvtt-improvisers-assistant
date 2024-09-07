@@ -16,8 +16,8 @@ export default class ImprovisersAssistant extends Application {
     return foundry.utils.mergeObject(super.defaultOptions, {
       id: "improvisers-assistant",
       template: `modules/${moduleId}/templates/generator.hbs`,
-      width: 720,
-      height: 900,
+      width: 400,
+      height: 700,
     }) as ApplicationOptions
   }
 
@@ -102,12 +102,10 @@ export default class ImprovisersAssistant extends Application {
 
     const prompt =
       type === "token"
-        ? `Generate a circle tabletop RPG token of a ${
+        ? `Tabletop RPG token of a ${
             this.tokenPrompt || "cute kitten"
-          }. Black matte background. Fantasy art style.`
-        : `Generate a square tabletop RPG tile of a ${
-            this.tilePrompt || "wooden floor"
-          }. Fantasy art style.`
+          }. Circle shape. Black matte background. Fantasy art style.`
+        : `Overhead, flat lay view of a${this.tilePrompt || "wooden floor"}. Fantasy art style.`
 
     const response = await fetch("https://api.openai.com/v1/images/generations", {
       method: "POST",

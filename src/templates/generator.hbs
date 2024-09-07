@@ -1,99 +1,102 @@
-<section>
-  <header class="flex-header">
-    <h1 class="grow-header">
-      {{localize "IMPROVISERS_ASSISTANT.TokenSectionHeader"}}
-    </h1>
-  </header>
-  <div class="prompt-input-container">
-    <input
-      type="text"
-      name="token-prompt"
-      class="prompt-input"
-      value="{{tokenPrompt}}"
-      placeholder="{{localize 'IMPROVISERS_ASSISTANT.TokenPromptPlaceholder'}}"
-    />
-    <button
-      class="generate-token-image-button generate-button"
-      type="button"
-      title="{{localize 'IMPROVISERS_ASSISTANT.GenerateTokenButtonTitle'}}"
-    >
-      <i class="fas fa-arrows-spin"></i>
-    </button>
-  </div>
-</section>
-<section class="generated-image-container">
-  {{#if isTokenLoading}}
-    <p class="generated-image-placeholder">
-      {{localize "IMPROVISERS_ASSISTANT.LoadingMessage"}}
-    </p>
-  {{else}}
-    {{#if tokenImageUrl}}
-      <img
-        class="generated-image"
-        src="{{tokenImageUrl}}"
-        alt="{{localize 'IMPROVISERS_ASSISTANT.GeneratedTokenImageAlt'}}"
+<div class="generators-container">
+  <section>
+    <header class="flex-header">
+      <h1 class="grow-header">
+        {{localize "IMPROVISERS_ASSISTANT.TokenSectionHeader"}}
+      </h1>
+    </header>
+    <div class="prompt-input-container">
+      <input
+        type="text"
+        name="token-prompt"
+        class="prompt-input"
+        value="{{tokenPrompt}}"
+        placeholder="{{localize 'IMPROVISERS_ASSISTANT.TokenPromptPlaceholder'}}"
       />
       <button
-        class="create-token-button"
+        class="generate-token-image-button generate-button"
         type="button"
-        title="{{localize 'IMPROVISERS_ASSISTANT.CreateTokenButtonTitle'}}"
+        title="{{localize 'IMPROVISERS_ASSISTANT.GenerateTokenButtonTitle'}}"
       >
-        {{localize "IMPROVISERS_ASSISTANT.CreateTokenButtonLabel"}}
+        <i class="fas fa-arrows-spin"></i>
       </button>
-    {{else}}
+    </div>
+  </section>
+  <section class="generated-image-container">
+    {{#if isTokenLoading}}
       <p class="generated-image-placeholder">
-        {{localize "IMPROVISERS_ASSISTANT.InitialTokenPrompt"}}
+        {{localize "IMPROVISERS_ASSISTANT.LoadingMessage"}}
       </p>
+    {{else}}
+      {{#if tokenImageUrl}}
+        <img
+          class="generated-image"
+          src="{{tokenImageUrl}}"
+          alt="{{localize 'IMPROVISERS_ASSISTANT.GeneratedTokenImageAlt'}}"
+        />
+        <button
+          class="create-token-button"
+          type="button"
+          title="{{localize 'IMPROVISERS_ASSISTANT.CreateTokenButtonTitle'}}"
+        >
+          {{localize "IMPROVISERS_ASSISTANT.CreateTokenButtonLabel"}}
+        </button>
+      {{else}}
+        <p class="generated-image-placeholder">
+          {{localize "IMPROVISERS_ASSISTANT.InitialTokenPrompt"}}
+        </p>
+      {{/if}}
     {{/if}}
-  {{/if}}
-</section>
+  </section>
 
-<section>
-  <header class="flex-header">
-    <h1 class="grow-header">
-      {{localize "IMPROVISERS_ASSISTANT.TileSectionHeader"}}
-    </h1>
-  </header>
-  <div class="prompt-input-container">
-    <input
-      type="text"
-      name="tile-prompt"
-      class="prompt-input"
-      value="{{tilePrompt}}"
-      placeholder="{{localize 'IMPROVISERS_ASSISTANT.TilePromptPlaceholder'}}"
-    />
-    <button
-      class="generate-tile-image-button generate-button"
-      type="button"
-      title="{{localize 'IMPROVISERS_ASSISTANT.GenerateTileButtonTitle'}}"
-    >
-      <i class="fas fa-arrows-spin"></i>
-    </button>
-  </div>
-</section>
-<section class="generated-image-container">
-  {{#if isTileLoading}}
-    <p class="generated-image-placeholder">
-      {{localize "IMPROVISERS_ASSISTANT.LoadingMessage"}}
-    </p>
-  {{else}}
-    {{#if tileImageUrl}}
-      <img
-        class="generated-image"
-        src="{{tileImageUrl}}"
-        alt="{{localize 'IMPROVISERS_ASSISTANT.GeneratedTileImageAlt'}}"
+  <section>
+    <header class="flex-header">
+      <h1 class="grow-header">
+        {{localize "IMPROVISERS_ASSISTANT.TileSectionHeader"}}
+      </h1>
+    </header>
+    <div class="prompt-input-container">
+      <input
+        type="text"
+        name="tile-prompt"
+        class="prompt-input"
+        value="{{tilePrompt}}"
+        placeholder="{{localize 'IMPROVISERS_ASSISTANT.TilePromptPlaceholder'}}"
       />
       <button
-        class="create-tile-button"
+        class="generate-tile-image-button generate-button"
         type="button"
-        title="{{localize 'IMPROVISERS_ASSISTANT.CreateTileButtonTitle'}}"
+        title="{{localize 'IMPROVISERS_ASSISTANT.GenerateTileButtonTitle'}}"
       >
-        {{localize "IMPROVISERS_ASSISTANT.CreateTileButtonLabel"}}
+        <i class="fas fa-arrows-spin"></i>
       </button>
-    {{else}}
+    </div>
+  </section>
+  <section class="generated-image-container">
+    {{#if isTileLoading}}
       <p class="generated-image-placeholder">
-        {{localize "IMPROVISERS_ASSISTANT.InitialTilePrompt"}}
+        {{localize "IMPROVISERS_ASSISTANT.LoadingMessage"}}
       </p>
+    {{else}}
+      {{#if tileImageUrl}}
+        <img
+          class="generated-image"
+          src="{{tileImageUrl}}"
+          alt="{{localize 'IMPROVISERS_ASSISTANT.GeneratedTileImageAlt'}}"
+        />
+        <button
+          class="create-tile-button"
+          type="button"
+          title="{{localize 'IMPROVISERS_ASSISTANT.CreateTileButtonTitle'}}"
+        >
+          {{localize "IMPROVISERS_ASSISTANT.CreateTileButtonLabel"}}
+        </button>
+      {{else}}
+        <p class="generated-image-placeholder">
+          {{localize "IMPROVISERS_ASSISTANT.InitialTilePrompt"}}
+        </p>
+      {{/if}}
     {{/if}}
-  {{/if}}
-</section>
+  </section>
+
+</div>
