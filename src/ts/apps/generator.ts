@@ -1,4 +1,5 @@
 import { moduleId } from "../constants"
+import { removeBackground, preload } from "@imgly/background-removal"
 
 export default class ImprovisersAssistant extends Application {
   private tokenImageBase64?: string
@@ -50,12 +51,24 @@ export default class ImprovisersAssistant extends Application {
       this.tokenPrompt = html.find("input[name='token-prompt']").val() as string
       this.isTokenLoading = true
       this.render()
+      console.log("preloading background removal data")
+      await preload()
+      console.log("preloaded background removal data")
       const prompt = `Tabletop RPG token of a ${
         this.tokenPrompt || "cute kitten"
       }. Circle shape. Black matte background. Fantasy art style.`
-      this.tokenImageBase64 = await this.generateImage(prompt)
-      this.isTokenLoading = false
-      this.render()
+      const tokenImageData = await this.generateImage(prompt)
+      // create a data uri for the image data
+      const tokenImageDataUri = `data:image/png;base64,${tokenImageData}`
+
+      const tokenImage = await removeBackground(tokenImageDataUri)
+      const reader = new FileReader()
+      reader.readAsDataURL(tokenImage)
+      reader.onloadend = () => {
+        this.tokenImageBase64 = reader.result?.toString().split(",")[1]
+        this.isTokenLoading = false
+        this.render()
+      }
     }
 
     const generateTileImage = async () => {
