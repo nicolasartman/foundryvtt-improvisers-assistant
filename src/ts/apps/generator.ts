@@ -16,8 +16,8 @@ export default class ImprovisersAssistant extends Application {
     return foundry.utils.mergeObject(super.defaultOptions, {
       id: "improvisers-assistant",
       template: `modules/${moduleId}/templates/generator.hbs`,
-      width: 400,
-      height: 700,
+      width: 320,
+      height: 800,
     }) as ApplicationOptions
   }
 
@@ -42,7 +42,10 @@ export default class ImprovisersAssistant extends Application {
       this.tokenPrompt = html.find("input[name='token-prompt']").val() as string
       this.isTokenLoading = true
       this.render()
-      await this.generateImage("token")
+      const prompt = `Tabletop RPG token of a ${
+        this.tokenPrompt || "cute kitten"
+      }. Circle shape. Black matte background. Fantasy art style.`
+      this.tokenImageBase64 = await this.generateImage(prompt)
       this.isTokenLoading = false
       this.render()
     }
@@ -51,7 +54,10 @@ export default class ImprovisersAssistant extends Application {
       this.tilePrompt = html.find("input[name='tile-prompt']").val() as string
       this.isTileLoading = true
       this.render()
-      await this.generateImage("tile")
+      const prompt = `Overhead, flat lay view of a ${
+        this.tilePrompt || "wooden floor"
+      }. Fantasy art style.`
+      this.tileImageBase64 = await this.generateImage(prompt)
       this.isTileLoading = false
       this.render()
     }
@@ -93,19 +99,12 @@ export default class ImprovisersAssistant extends Application {
     return ((game as Game).settings.get(moduleId, "open_ai_api_key") || "") as string
   }
 
-  async generateImage(type: "token" | "tile") {
+  async generateImage(prompt: string) {
     const apiKey = ImprovisersAssistant.getOpenAiApiKey()
     if (!apiKey) {
       ui.notifications?.error("OpenAI API key is not set.")
       return
     }
-
-    const prompt =
-      type === "token"
-        ? `Tabletop RPG token of a ${
-            this.tokenPrompt || "cute kitten"
-          }. Circle shape. Black matte background. Fantasy art style.`
-        : `Overhead, flat lay view of a${this.tilePrompt || "wooden floor"}. Fantasy art style.`
 
     const response = await fetch("https://api.openai.com/v1/images/generations", {
       method: "POST",
@@ -131,13 +130,10 @@ export default class ImprovisersAssistant extends Application {
 
     const data = await response.json()
     if (data && data.data && data.data.length > 0) {
-      if (type === "token") {
-        this.tokenImageBase64 = data.data[0].b64_json
-      } else {
-        this.tileImageBase64 = data.data[0].b64_json
-      }
+      return data.data[0].b64_json
     } else {
       ui.notifications?.error("No image returned from OpenAI.")
+      return null
     }
   }
 

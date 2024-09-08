@@ -9,28 +9,21 @@
   .generated-image-container {
     display: flex;
     flex-direction: column;
-    padding-top: 10px;
+    gap: 10px;
     align-items: center;
+
+    .generated-image {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      border: none;
+    }
   }
 
   .prompt-input-container {
     display: flex;
     flex-direction: row;
     height: 30px;
-  }
-
-  .prompt-input {
-    height: 100%;
-  }
-
-  .generated-image {
-    font-size: 200px;
-  }
-
-  .generated-image {
-    object-fit: contain;
-    border: none;
-    max-width: 250px;
   }
 
   .generate-button {
@@ -42,10 +35,9 @@
   .prompt-input-container {
     display: flex;
     align-items: center;
-  }
 
-  .prompt-input {
-    flex-grow: 1;
-    margin-right: 5px;
+    .prompt-input {
+      height: 100%;
+    }
   }
 }
