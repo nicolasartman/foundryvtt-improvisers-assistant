@@ -41,10 +41,6 @@
         >
           {{localize "IMPROVISERS_ASSISTANT.CreateTokenButtonLabel"}}
         </button>
-      {{else}}
-        <p class="generated-image-placeholder">
-          {{localize "IMPROVISERS_ASSISTANT.InitialTokenPrompt"}}
-        </p>
       {{/if}}
     {{/if}}
   </section>
@@ -91,12 +87,53 @@
         >
           {{localize "IMPROVISERS_ASSISTANT.CreateTileButtonLabel"}}
         </button>
-      {{else}}
-        <p class="generated-image-placeholder">
-          {{localize "IMPROVISERS_ASSISTANT.InitialTilePrompt"}}
-        </p>
       {{/if}}
     {{/if}}
   </section>
 
+  <section>
+    <header class="flex-header">
+      <h1 class="grow-header">
+        {{localize "IMPROVISERS_ASSISTANT.PictureSectionHeader"}}
+      </h1>
+    </header>
+    <div class="prompt-input-container">
+      <input
+        type="text"
+        name="picture-prompt"
+        class="prompt-input"
+        value="{{picturePrompt}}"
+        placeholder="{{localize 'IMPROVISERS_ASSISTANT.PicturePromptPlaceholder'}}"
+      />
+      <button
+        class="generate-picture-image-button generate-button"
+        type="button"
+        title="{{localize 'IMPROVISERS_ASSISTANT.GeneratePictureButtonTitle'}}"
+      >
+        <i class="fas fa-arrows-spin"></i>
+      </button>
+    </div>
+  </section>
+  <section class="generated-image-container">
+    {{#if isPictureLoading}}
+      <p class="generated-image-placeholder">
+        {{localize "IMPROVISERS_ASSISTANT.LoadingMessage"}}
+      </p>
+    {{else}}
+      {{#if pictureImageUrl}}
+        <img
+          class="generated-image"
+          src="{{pictureImageUrl}}"
+          alt="{{localize 'IMPROVISERS_ASSISTANT.GeneratedPictureImageAlt'}}"
+        />
+        <button
+          class="create-picture-button"
+          type="button"
+          title="{{localize 'IMPROVISERS_ASSISTANT.CreatePictureButtonTitle'}}"
+        >
+          {{localize "IMPROVISERS_ASSISTANT.CreatePictureButtonLabel"}}
+        </button>
+      {{/if}}
+    {{/if}}
+  </section>
 </div>

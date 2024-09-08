@@ -2,21 +2,26 @@
   "IMPROVISERS_ASSISTANT.Settings.OpenAI_API_Key.Name": "OpenAI API Key",
   "IMPROVISERS_ASSISTANT.Settings.OpenAI_API_Key.Hint": "Enter your OpenAI API key here",
   "IMPROVISERS_ASSISTANT": {
-    "InitialTokenPrompt": "Type in what token you want to generate then click generate.",
-    "InitialTilePrompt": "Type in what tile you want to generate then click generate.",
     "LoadingMessage": "Generating image...",
     "Title": "Improviser's Assistant",
-    "TokenSectionHeader": "Generate Token",
-    "TileSectionHeader": "Generate Tile",
-    "GenerateTokenButtonTitle": "Generate Token Image",
+    "TokenSectionHeader": "Create Token",
+    "GenerateTokenButtonTitle": "Create Token Image",
     "GenerateTileButtonTitle": "Generate Tile Image",
     "GeneratedTokenImageAlt": "Generated Token Image",
+    "TileSectionHeader": "Create Tile",
     "GeneratedTileImageAlt": "Generated Tile Image",
     "TokenPromptPlaceholder": "Examples: 'kobold', 'majestic horse', 'giant enemy crab'",
     "TilePromptPlaceholder": "Examples: 'wooden floor', 'stone wall', 'grassy field'",
     "CreateTokenButtonLabel": "Create Token",
     "CreateTokenButtonTitle": "Create a new token on the current scene with this image",
     "CreateTileButtonLabel": "Create Tile",
-    "CreateTileButtonTitle": "Create a new tile on the current scene with this image"
+    "CreateTileButtonTitle": "Create a new tile on the current scene with this image",
+    "PictureSectionHeader": "Create Picture",
+    "PicturePromptLabel": "Picture Description",
+    "PicturePromptPlaceholder": "Examples: 'misty forest', 'desert oasis', 'bustling marketplace'",
+    "GeneratePictureButtonTitle": "Generate Picture",
+    "GeneratedPictureImageAlt": "Generated Picture",
+    "CreatePictureButtonLabel": "Create Picture",
+    "CreatePictureButtonTitle": "Create a new picture on the current scene with this image"
   }
 }

@@ -3,10 +3,13 @@ import { moduleId } from "../constants"
 export default class ImprovisersAssistant extends Application {
   private tokenImageBase64?: string
   private tileImageBase64?: string
+  private pictureImageBase64?: string
   private isTokenLoading: boolean = false
   private isTileLoading: boolean = false
+  private isPictureLoading: boolean = false
   private tokenPrompt: string = ""
   private tilePrompt: string = ""
+  private picturePrompt: string = ""
 
   override get title(): string {
     return (game as Game).i18n.localize("IMPROVISERS_ASSISTANT.Title")
@@ -29,16 +32,21 @@ export default class ImprovisersAssistant extends Application {
       tileImageUrl: this.tileImageBase64
         ? `data:image/png;base64,${this.tileImageBase64}`
         : undefined,
+      pictureImageUrl: this.pictureImageBase64
+        ? `data:image/png;base64,${this.pictureImageBase64}`
+        : undefined,
       isTokenLoading: this.isTokenLoading,
       isTileLoading: this.isTileLoading,
+      isPictureLoading: this.isPictureLoading,
       tokenPrompt: this.tokenPrompt,
       tilePrompt: this.tilePrompt,
+      picturePrompt: this.picturePrompt,
     }
   }
 
   override activateListeners(html: JQuery<HTMLElement>): void {
     super.activateListeners(html)
-    const generateToken = async () => {
+    const generateTokenImage = async () => {
       this.tokenPrompt = html.find("input[name='token-prompt']").val() as string
       this.isTokenLoading = true
       this.render()
@@ -50,11 +58,11 @@ export default class ImprovisersAssistant extends Application {
       this.render()
     }
 
-    const generateTile = async () => {
+    const generateTileImage = async () => {
       this.tilePrompt = html.find("input[name='tile-prompt']").val() as string
       this.isTileLoading = true
       this.render()
-      const prompt = `Overhead, flat lay view of a ${
+      const prompt = `Overhead, flat lay view of a TTRPG tile of a ${
         this.tilePrompt || "wooden floor"
       }. Fantasy art style.`
       this.tileImageBase64 = await this.generateImage(prompt)
@@ -62,25 +70,46 @@ export default class ImprovisersAssistant extends Application {
       this.render()
     }
 
+    const generatePictureImage = async () => {
+      this.picturePrompt = html.find("input[name='picture-prompt']").val() as string
+      this.isPictureLoading = true
+      this.render()
+      const prompt = `${this.picturePrompt || "fantasy landscape"}. Fantasy art style.`
+      this.pictureImageBase64 = await this.generateImage(prompt)
+      this.isPictureLoading = false
+      this.render()
+    }
+
     html.find("button.generate-token-image-button").on("click", (event) => {
       event.preventDefault()
-      generateToken()
+      generateTokenImage()
     })
     html.find("input[name='token-prompt']").on("keypress", (event) => {
       if (event.key === "Enter") {
         event.preventDefault()
-        generateToken()
+        generateTokenImage()
       }
     })
 
     html.find("button.generate-tile-image-button").on("click", (event) => {
       event.preventDefault()
-      generateTile()
+      generateTileImage()
     })
     html.find("input[name='tile-prompt']").on("keypress", (event) => {
       if (event.key === "Enter") {
         event.preventDefault()
-        generateTile()
+        generateTileImage()
+      }
+    })
+
+    html.find("button.generate-picture-image-button").on("click", (event) => {
+      event.preventDefault()
+      generatePictureImage()
+    })
+    html.find("input[name='picture-prompt']").on("keypress", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault()
+        generatePictureImage()
       }
     })
 
@@ -92,6 +121,11 @@ export default class ImprovisersAssistant extends Application {
     html.find("button.create-tile-button").on("click", async (event) => {
       event.preventDefault()
       await this.createTile()
+    })
+
+    html.find("button.create-picture-button").on("click", async (event) => {
+      event.preventDefault()
+      await this.createPicture()
     })
   }
 
@@ -150,13 +184,11 @@ export default class ImprovisersAssistant extends Application {
     }
 
     try {
-      // Create the token using the base64 image data directly
       const tokenData = {
         img: `data:image/png;base64,${this.tokenImageBase64}`,
         name: this.tokenPrompt || "Generated Token",
         x: 0,
         y: 0,
-        // You can add more properties here as needed
       }
 
       await scene.createEmbeddedDocuments("Token", [tokenData])
@@ -194,6 +226,35 @@ export default class ImprovisersAssistant extends Application {
     } catch (error) {
       console.error("Error creating tile:", error)
       ui.notifications?.error("Failed to create tile.")
+    }
+  }
+
+  async createPicture() {
+    const scene = (game as Game).scenes?.active as Scene & { grid: { size: number } }
+    if (!scene) {
+      ui.notifications?.warn("No active scene.")
+      return
+    }
+
+    if (!this.pictureImageBase64) {
+      ui.notifications?.error("No picture generated yet.")
+      return
+    }
+
+    try {
+      const gridSize = scene.grid.size
+      const pictureData = {
+        name: this.picturePrompt || "Generated Picture",
+        img: `data:image/png;base64,${this.pictureImageBase64}`,
+        width: 10 * gridSize,
+        height: 10 * gridSize,
+      }
+
+      await scene.createEmbeddedDocuments("Tile", [pictureData])
+      ui.notifications?.info("Picture tile created successfully.")
+    } catch (error) {
+      console.error("Error creating picture:", error)
+      ui.notifications?.error("Failed to create picture.")
     }
   }
 }
